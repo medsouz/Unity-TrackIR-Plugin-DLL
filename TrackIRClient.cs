@@ -218,7 +218,15 @@ namespace TrackIRUnity
 
     public TrackIRClient.NPRESULT NPClient_Init(string dllPath)
     {
-      dllPath = dllPath + "NPClient.dll";
+      //LET THE SORCERY COMMENCE
+      if (IntPtr.Size == 4) //32 bit
+      {
+       dllPath = dllPath + "NPClient.dll";
+      }
+      else if (IntPtr.Size == 8) //64 bit
+      {
+        dllPath = dllPath + "NPClient64.dll";
+      }
       if (!File.Exists(dllPath))
         return TrackIRClient.NPRESULT.NP_ERR_DLL_NOT_FOUND;
       int hModule = TrackIRClient.LoadLibrary(dllPath);
